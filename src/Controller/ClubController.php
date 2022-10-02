@@ -29,9 +29,9 @@ namespace App\Controller;
                             'Description' => 'theorique', 'date_debut' => '10/06/2020', 'date_fin' => '14/06/2020',
                             'nb_participants' => 12));
                     $max_value = max(array_column($formations, 'nb_participants'));
-                    //$max_value = max(array_keys($formations));
+                    $total = array_sum(array_column($formations, 'nb_participants'));
                     return $this->render("club/list.html.twig",
-                        array("x" => $var1, "y" => $var2, "max" => $max_value, "tabFormation" => $formations));
+                        array("x" => $var1, "y" => $var2, "max" => $max_value,"total" => $total, "tabFormation" => $formations));
                 }
                 #[Route('/participer', name: 'reservation_formation')]
                 public function reservation()

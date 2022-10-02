@@ -33,10 +33,10 @@
 {% endif %}
 Nb_Formation: {{ tabFormation|length }}<br>
 max_Nb_Participants: {{ max }}<br>
+total_Nb_Participants: {{ total }}<br>
 
 {% for i in tabFormation %}
                     {% if i.nb_participants == max  %}
                         {{ i.Titre }}
                     {% endif%}
 {% endfor %}
-
