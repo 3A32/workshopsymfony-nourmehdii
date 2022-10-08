@@ -10,7 +10,7 @@ use Symfony\Config\TwigExtra\StringConfig;
 class Category
 {
     #[ORM\Id]
-    //#[ORM\GeneratedValue] c pour lauto incrementation we don't use it in this case
+    //#[ORM\GeneratedValue] c pour lauto incrementation we don't use it in this exemple
     #[ORM\Column(length: 100)]
     private ?String $Ref = null;
 
