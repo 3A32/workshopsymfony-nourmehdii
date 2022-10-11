@@ -3,8 +3,13 @@
 namespace App\Controller;
     use Doctrine\DBAL\Schema\View;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
+    use  App\Repository\ClubRepository;
+    use Doctrine\Persistence\ManagerRegistry;
+    use App\Entity\Club;
+    use App\Form\ClubType;
+
 
     class ClubController extends AbstractController
     {
@@ -38,4 +43,52 @@ namespace App\Controller;
                 {
                     return new Response("nouvelle page");
                 }
+        #[Route('/clubs', name: 'app_clubs')]
+
+        public function listClub(ClubRepository $repository)
+        {
+            $clubs= $repository->findAll();
+            return $this->render("club/listClub.html.twig",array("tabClubs"=>$clubs));
+        }
+        #[Route('/addClub',name:'app_addclub')]
+        public function addClub(ManagerRegistry $doctrine, Request $request)
+        {
+            $club= new Club();
+            $form=$this->createForm(ClubType::class,$club);
+            $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                // if ($form->isValid())
+                $em = $doctrine->getManager();
+                $em->persist($club);
+                $em->flush();
+                return $this->redirectToRoute("app_clubs");
+            }
+            return $this->render("club/addClub.html.twig",
+                array("formClub"=>$form->createView())); } //ou bien
+            #[Route('/updateClub/{id}',name:'app_updateClub')]
+        public function updateClub(ClubRepository $repository,$id,ManagerRegistry $doctrine, Request $request)
+        {
+            $club=$repository ->find($id);
+            $form=$this->createForm(ClubType::class,$club);
+            $form->handleRequest($request);
+            if ($form->isSubmitted()){
+                $em=$doctrine->getManager();
+                $em->flush();
+                return $this->redirectToRoute("app_clubs");
+            }
+           return $this->renderForm("club/update.html.twig",
+                array("formClub"=>$form));
+        }
+        #[Route('/removeClub/{id}', name: 'app_removeClub')]
+
+        public function deleteClub(ManagerRegistry $doctrine,$id,ClubRepository $repository)
+        {
+            $club= $repository->find($id);
+            $em= $doctrine->getManager();
+            $em->remove($club);
+            $em->flush();
+            return $this->redirectToRoute("app_clubs");
+
+        }
+
             }
