@@ -47,6 +47,9 @@ namespace App\Controller;
 
         public function listClub(ClubRepository $repository)
         {
+            //$clubs=$this->getDoctrine()->getRepository(ClubRepository)->findAll();
+            //$em=$this->getDoctrine()->getManager();
+            //$em->flush();
             $clubs= $repository->findAll();
             return $this->render("club/listClub.html.twig",array("tabClubs"=>$clubs));
         }
