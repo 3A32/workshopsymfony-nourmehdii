@@ -1,0 +1,11 @@
+a href="{{ path ('app_addEvent')}}">Add Event</a>
+{#route fel controleur#}
+<h4>List Events</h4>
+{% for i in tabEvents %}
+    id:{{ i.id }}
+    name:{{ i.name }}
+    description: {{ i.description }}
+    <a href="{{ path('app_updateEvent',{'id':i.id}) }}">Update</a>
+    <a href="{{ path('app_removeEvent',{'id':i.id}) }}">Delete</a>
+    <br>
+{% endfor %}

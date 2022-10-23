@@ -68,6 +68,7 @@ namespace App\Controller;
             }
             return $this->render("club/addClub.html.twig",
                 array("formClub"=>$form->createView())); } //ou bien
+
             #[Route('/updateClub/{id}',name:'app_updateClub')]
         public function updateClub(ClubRepository $repository,$id,ManagerRegistry $doctrine, Request $request)
         {
