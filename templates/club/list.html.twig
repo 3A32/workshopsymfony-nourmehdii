@@ -40,3 +40,42 @@ total_Nb_Participants: {{ total }}<br>
                         {{ i.Titre }}
                     {% endif%}
 {% endfor %}
+<h1>liste </h1>
+{{ form(searchForm) }}
+<table border="1">
+    <tr>
+        <th>nsc</th>
+        <th>classroom</th>
+        <th>email</th>
+    </tr>
+
+    <tr>
+        {% for i in students %}
+            <td>{{ i.nsc}}</td>
+            <td>{{ i.classroom.name }}</td>
+            <td>{{ i.email}}</td>
+        {% endfor %}
+</table>
+</tr>
+<h2>Order by nsc</h2>
+<table border="1">
+    <tr>
+        {% for j in  byNCE %}
+            <td>{{ j.nsc}}</td>
+            <td>{{ j.classroom.name }}</td>
+            <td>{{ j.email}}</td>
+        {% endfor %}
+    </tr>
+</table>
+<h2 style="color: greenyellow">Top Students</h2>
+<table border="1">
+    {%  for i in topStudents %}
+        nce: {{ i.nsc }}
+        username: {{ i.username }}
+        <br>
+    {% endfor %}
+
+    </tr>
+</table>
+</tr>
+</table>

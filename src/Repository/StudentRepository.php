@@ -38,29 +38,33 @@ class StudentRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function getStudentsOrdredByNce(){
+        $qb=$this->createQueryBuilder('s')
+            ->orderBy('s.nsc','DESC');
+        return $qb->getQuery()
+            ->getResult();
 
-//    /**
-//     * @return Student[] Returns an array of Student objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    }
+    public function findStudentByNCE($nsc) {
+        $qb= $this->createQueryBuilder('s')
+            ->where('s.nsc LIKE :nsc')
+            ->setParameter('nsc',$nsc);
+        return $qb->getQuery()
+            ->getResult();
 
-//    public function findOneBySomeField($value): ?Student
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    }
+    public function searchByMoyenne($min,$max) :array {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT s FROM App\Entity\Student s WHERE s.moyenne BETWEEN :min AND :max')
+            ->setParameter('min',$min)
+            ->setParameter('max',$max);
+        return $query->getResult();
+    }
+
+    public function topStudent(){
+        $entityManager=$this->getEntityManager();
+        $query=$entityManager
+            ->createQuery("SELECT s FROM APP\Entity\Student s WHERE s.moyenne >= 15");
+        return $query->getResult();
+    }
 }
