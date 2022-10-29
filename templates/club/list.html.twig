@@ -1,0 +1,81 @@
+<img src="{{ asset('img/student.jpg') }}" alt="student"
+     width="100px" height="100px">
+<h1>La liste des formations</h1> de la classe
+{{ x }} dans la salle  {{ y }}
+{% if tabFormation is empty %}
+    <h1>Pas de formation</h1>
+{% else %}
+    <table border="1">
+        <tr>
+            <td>Ref</td>
+            <td>Titre</td>
+            <td>Description</td>
+            <td>Nb_P</td>
+            <td>Participer</td>
+        </tr>
+        {% for i in tabFormation %}
+        {# {% if i.Description == "theorique" %} #}
+                <tr>
+                    <td>{{ i.ref }}</td>
+                    <td>{{ i.Titre|upper }}</td>
+                    <td>{{ i.Description }}</td>
+                    <td>{{ i.nb_participants }}</td>
+                    <td>
+                        {% if i. nb_participants ==0 %}
+                            <a href="{{ path('reservation_formation') }}">Participer</a>
+                        {% else %}
+                            solde out
+                        {% endif %}
+                    </td>
+           {#  {% endif%} #}
+        {% endfor %}
+    </table>
+{% endif %}
+Nb_Formation: {{ tabFormation|length }}<br>
+max_Nb_Participants: {{ max }}<br>
+total_Nb_Participants: {{ total }}<br>
+
+{% for i in tabFormation %}
+                    {% if i.nb_participants == max  %}
+                        {{ i.Titre }}
+                    {% endif%}
+{% endfor %}
+<h1>liste </h1>
+{{ form(searchForm) }}
+<table border="1">
+    <tr>
+        <th>nsc</th>
+        <th>classroom</th>
+        <th>email</th>
+    </tr>
+
+    <tr>
+        {% for i in students %}
+            <td>{{ i.nsc}}</td>
+            <td>{{ i.classroom.name }}</td>
+            <td>{{ i.email}}</td>
+        {% endfor %}
+</table>
+</tr>
+<h2>Order by nsc</h2>
+<table border="1">
+    <tr>
+        {% for j in  byNCE %}
+            <td>{{ j.nsc}}</td>
+            <td>{{ j.classroom.name }}</td>
+            <td>{{ j.email}}</td>
+        {% endfor %}
+    </tr>
+</table>
+<h2 style="color: greenyellow">Top Students</h2>
+<table border="1">
+    {%  for i in topStudents %}
+        nce: {{ i.nsc }}
+        username: {{ i.username }}
+        <br>
+    {% endfor %}
+
+    </tr>
+</table>
+</tr>
+</table>
